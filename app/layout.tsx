@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import './globals.css';
 import Analytics from '@/components/Analytics';
+import Clarity from '@/components/Clarity';
 
 export const metadata: Metadata = {
   title: 'Leonardo Gonzalez — Google Cloud Architect · Workspace Specialist',
@@ -34,6 +35,7 @@ export default function RootLayout({
       <body className="antialiased bg-bg0 text-ink-200">
         {children}
         <Analytics />
+        <Clarity />
       </body>
     </html>
   );
