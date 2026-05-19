@@ -17,16 +17,9 @@
  */
 
 export const profile = {
-  name: 'Leonardo Gonzalez',
-  title: 'Google Cloud Architect · Workspace Specialist',
-  location: 'El Salvador',
-  languages: 'English · Spanish',
-  yearsExperience: '5+',
-  projectsCount: '80+',
-  tagline:
-    'Designing GCP infrastructure, running Workspace at scale, and wiring automation and AI into real business workflows.',
-  shortBio:
-    'Google Cloud certified engineer with 5+ years building and operating cloud and collaboration systems for businesses across the Americas.',
+  // Only fields actively rendered are kept here. Display copy (name, title,
+  // tagline) is set inline in the components that show it — search the
+  // codebase for "Leonardo Gonzalez" to find them.
   longBio:
     "I'm a Google Cloud certified engineer working at the intersection of cloud infrastructure and the Google ecosystem. My day-to-day is GCP architecture, Workspace administration, and stitching automation and AI into business workflows that have to keep running. Most of what I deliver is invisible until it isn't — clean migrations, healthy mail systems, reliable backends, and integrations you don't have to think about.",
   email: 'info@leonardojaaziel.com',
