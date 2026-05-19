@@ -1,0 +1,355 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Leonardo Gonzalez — Resume</title>
+<meta name="description" content="Resume for Leonardo Gonzalez — Google Cloud Architect & Workspace Specialist. Google Cloud certified. 5+ years, 80+ projects across NA & LATAM." />
+<meta name="author" content="Leonardo Gonzalez" />
+<style>
+  /* ATS-friendly: simple, semantic, no columns, no graphics */
+  :root {
+    --ink: #0f172a;
+    --ink-2: #1e293b;
+    --muted: #475569;
+    --rule: #cbd5e1;
+    --accent: #0284c7;
+    --bg: #ffffff;
+  }
+  * { box-sizing: border-box; }
+  html, body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: 'Inter', 'Segoe UI', system-ui, -apple-system, Arial, sans-serif;
+    font-size: 10.5pt;
+    line-height: 1.45;
+    -webkit-font-smoothing: antialiased;
+    margin: 0;
+  }
+  main {
+    max-width: 8.5in;
+    margin: 0 auto;
+    padding: 0.55in 0.6in 0.4in;
+    background: var(--bg);
+  }
+  header.hdr {
+    border-bottom: 1.5px solid var(--ink);
+    padding-bottom: 12px;
+    margin-bottom: 18px;
+  }
+  h1 {
+    font-size: 22pt;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    margin: 0;
+    color: var(--ink);
+  }
+  .role {
+    font-size: 11.5pt;
+    color: var(--accent);
+    font-weight: 600;
+    margin-top: 2px;
+    letter-spacing: 0.01em;
+  }
+  .contact {
+    margin-top: 8px;
+    font-size: 9.5pt;
+    color: var(--muted);
+  }
+  .contact a {
+    color: var(--ink-2);
+    text-decoration: none;
+    border-bottom: 1px dotted var(--rule);
+  }
+  .contact .sep { color: var(--rule); margin: 0 7px; }
+
+  section { margin-bottom: 16px; page-break-inside: avoid; }
+  section.experience { page-break-inside: auto; }
+  h2 {
+    font-size: 10pt;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--accent);
+    border-bottom: 1px solid var(--rule);
+    padding-bottom: 4px;
+    margin: 0 0 10px;
+  }
+
+  p.summary {
+    margin: 0;
+    color: var(--ink-2);
+    font-size: 10.5pt;
+    line-height: 1.55;
+  }
+
+  .role-block { margin-bottom: 12px; page-break-inside: avoid; }
+  .role-block:last-child { margin-bottom: 0; }
+  .role-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 12px;
+    margin-bottom: 2px;
+  }
+  .role-title {
+    font-weight: 700;
+    color: var(--ink);
+    font-size: 11pt;
+  }
+  .role-org {
+    color: var(--muted);
+    font-weight: 500;
+    font-size: 10.5pt;
+  }
+  .role-meta {
+    color: var(--muted);
+    font-size: 9.5pt;
+    white-space: nowrap;
+    font-variant-numeric: tabular-nums;
+  }
+  .role-block ul {
+    list-style: none;
+    padding: 0;
+    margin: 4px 0 0;
+  }
+  .role-block li {
+    position: relative;
+    padding-left: 14px;
+    margin-bottom: 3px;
+    color: var(--ink-2);
+  }
+  .role-block li::before {
+    content: '▸';
+    position: absolute;
+    left: 0;
+    color: var(--accent);
+    font-size: 0.85em;
+    top: 2px;
+  }
+
+  .skills-grid { display: grid; grid-template-columns: 1.2fr 3fr; gap: 4px 14px; }
+  .skills-grid dt {
+    font-weight: 700;
+    color: var(--ink);
+    font-size: 10pt;
+    padding-top: 2px;
+  }
+  .skills-grid dd {
+    margin: 0;
+    color: var(--ink-2);
+    padding-bottom: 4px;
+  }
+
+  .cert-list { margin: 0; padding: 0; list-style: none; }
+  .cert-list li {
+    padding: 5px 0;
+    border-bottom: 1px solid var(--rule);
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 12px;
+  }
+  .cert-list li:last-child { border-bottom: 0; }
+  .cert-name { font-weight: 600; color: var(--ink); }
+  .cert-issuer { color: var(--muted); font-size: 9.5pt; }
+  .cert-level {
+    font-size: 8.5pt;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--accent);
+    font-weight: 700;
+    white-space: nowrap;
+  }
+
+  .langs { color: var(--ink-2); }
+  .langs strong { color: var(--ink); }
+
+  /* Print-specific tuning so the PDF stays clean */
+  @page { size: letter; margin: 0; }
+  @media print {
+    html, body { background: #fff; }
+    main { padding: 0.55in 0.6in; max-width: none; }
+    a { color: inherit; }
+    .contact a { border-bottom: none; }
+  }
+</style>
+</head>
+<body>
+<main>
+  <header class="hdr">
+    <h1>Leonardo Gonzalez</h1>
+    <div class="role">Google Cloud Architect &amp; Workspace Specialist</div>
+    <div class="contact">
+      <a href="mailto:info@leonardojaaziel.com">info@leonardojaaziel.com</a>
+      <span class="sep">·</span>
+      <a href="https://leonardojaaziel.com">leonardojaaziel.com</a>
+      <span class="sep">·</span>
+      <a href="https://www.linkedin.com/in/leonardojaaziel">linkedin.com/in/leonardojaaziel</a>
+      <span class="sep">·</span>
+      <a href="https://github.com/titobrenes123">github.com/titobrenes123</a>
+      <span class="sep">·</span>
+      El Salvador &nbsp;·&nbsp; English / Spanish
+    </div>
+  </header>
+
+  <section>
+    <h2>Professional Summary</h2>
+    <p class="summary">
+      Google Cloud certified Architect &amp; Engineer with 5+ years designing,
+      deploying, and operating cloud infrastructure and Google Workspace
+      environments for businesses across North America and Latin America.
+      Shipped 80+ engagements spanning GCP architecture, Workspace migrations,
+      email deliverability, serverless data pipelines, and Gemini AI
+      integrations. Bilingual (English / Spanish) consultant operating
+      hands-on across the stack — from Admin Console to Compute Engine to
+      BigQuery — with a bias for reliable, observable systems that quietly do
+      their job.
+    </p>
+  </section>
+
+  <section>
+    <h2>Certifications</h2>
+    <ul class="cert-list">
+      <li>
+        <span><span class="cert-name">Google Cloud Professional Cloud Architect</span> &nbsp;
+          <span class="cert-issuer">— Google Cloud</span></span>
+        <span class="cert-level">Professional</span>
+      </li>
+      <li>
+        <span><span class="cert-name">Google Professional Google Workspace Administrator</span> &nbsp;
+          <span class="cert-issuer">— Google Cloud</span></span>
+        <span class="cert-level">Professional</span>
+      </li>
+      <li>
+        <span><span class="cert-name">Google Cloud Associate Cloud Engineer</span> &nbsp;
+          <span class="cert-issuer">— Google Cloud</span></span>
+        <span class="cert-level">Associate</span>
+      </li>
+      <li>
+        <span><span class="cert-name">Google Cloud Digital Leader</span> &nbsp;
+          <span class="cert-issuer">— Google Cloud</span></span>
+        <span class="cert-level">Foundational</span>
+      </li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Core Competencies</h2>
+    <dl class="skills-grid">
+      <dt>Cloud Architecture</dt>
+      <dd>Google Cloud Platform (GCP), Compute Engine, GKE, Cloud Run, Cloud Functions, App Engine, Cloud Storage, IAM, VPC networking, Cloud Monitoring &amp; Logging, cost optimization, hybrid &amp; multi-cloud planning, reliability engineering, infrastructure-as-code.</dd>
+
+      <dt>Google Workspace</dt>
+      <dd>Admin Console, identity management &amp; SSO, Gmail administration, deliverability (SPF / DKIM / DMARC / BIMI), Chrome Enterprise &amp; ChromeOS device management, shared drives, multi-domain environments, M365 → Workspace migrations, compliance &amp; security baselines.</dd>
+
+      <dt>Data &amp; AI</dt>
+      <dd>BigQuery, Firestore, Firebase, Vertex AI, Gemini, Dialogflow CX, conversational AI, AI-assisted analytics pipelines, Firestore → BigQuery streaming, Cloud Functions data transforms.</dd>
+
+      <dt>Programming</dt>
+      <dd>Python, SQL, JavaScript / TypeScript, Node.js, Apps Script, REST API integrations, Bash / Linux administration.</dd>
+
+      <dt>DevOps &amp; Hosting</dt>
+      <dd>Firebase Hosting, GitHub Actions CI/CD, container deployments, DNS management, observability, production troubleshooting, performance tuning.</dd>
+
+      <dt>Languages</dt>
+      <dd>English (professional working proficiency) &nbsp;·&nbsp; Spanish (native).</dd>
+    </dl>
+  </section>
+
+  <section class="experience">
+    <h2>Professional Experience</h2>
+
+    <div class="role-block">
+      <div class="role-head">
+        <span><span class="role-title">Founder &amp; Principal Engineer</span> <span class="role-org">· Guanacos Tech</span></span>
+        <span class="role-meta">2018 – Present &nbsp;·&nbsp; El Salvador</span>
+      </div>
+      <ul>
+        <li>Founded and operate a Salvadoran cloud &amp; Workspace consultancy serving SMBs across North America and Latin America. <strong>80+ engagements delivered to date.</strong></li>
+        <li>Lead end-to-end Google Workspace deployments and Microsoft 365 → Workspace migrations including DNS cutover, SPF/DKIM/DMARC reauthentication, identity sync, ChromeOS rollout, and end-user enablement.</li>
+        <li>Design and ship GCP infrastructure — Compute Engine, Cloud Run, Cloud Functions, BigQuery, Firestore — with attention to cost, reliability, and operational simplicity.</li>
+        <li>Built and operate Guanacos Tech's bilingual marketing site, blog, and admin lead-management dashboard on Firebase Hosting + Cloud Functions with hardened Firestore Security Rules.</li>
+        <li>Specialize in production rescues: stalled Workspace migrations, collapsed deliverability, and drifted cloud infrastructure that has outgrown its original owner.</li>
+        <li>Operate bilingually (English / Spanish) across both North American and LATAM timezones.</li>
+      </ul>
+    </div>
+
+    <div class="role-block">
+      <div class="role-head">
+        <span><span class="role-title">Independent Cloud Consultant</span> <span class="role-org">· Contract engagements</span></span>
+        <span class="role-meta">2020 – Present &nbsp;·&nbsp; Remote</span>
+      </div>
+      <ul>
+        <li>Deliver architecture reviews, Workspace administration, and AI-integration builds to clients via direct contracts and via consulting marketplaces (Fiverr, Upwork).</li>
+        <li>Author technical writeups, architectural recommendations, and remediation plans for production cloud and email systems.</li>
+        <li>Build Apps Script &amp; Firebase web apps that document client engagement activity into CRM systems (Salesforce, HubSpot) with Gemini-assisted content polishing.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section>
+    <h2>Selected Projects</h2>
+
+    <div class="role-block">
+      <div class="role-head">
+        <span class="role-title">Dialogflow + BigQuery + Gemini Conversational Assistant</span>
+        <span class="role-meta">Cloud Functions · BigQuery · Gemini</span>
+      </div>
+      <ul>
+        <li>End-to-end build of a conversational analytics assistant: user prompts hit a Cloud Function, which dispatches parameterized SQL against BigQuery and feeds the result to Gemini for natural-language synthesis returned to the chat surface.</li>
+      </ul>
+    </div>
+
+    <div class="role-block">
+      <div class="role-head">
+        <span class="role-title">Microsoft 365 → Google Workspace Migrations</span>
+        <span class="role-meta">Workspace · DNS · Mail flow</span>
+      </div>
+      <ul>
+        <li>Multi-domain migrations including DNS cutover, SPF/DKIM/DMARC reauthentication, identity sync, ChromeOS device enrollment, shared-drive architecture, and end-user training.</li>
+      </ul>
+    </div>
+
+    <div class="role-block">
+      <div class="role-head">
+        <span class="role-title">Firestore → BigQuery Streaming Pipeline</span>
+        <span class="role-meta">Firestore · BigQuery · Cloud Functions</span>
+      </div>
+      <ul>
+        <li>Cloud-Function-driven export of Firestore document changes into a queryable BigQuery dataset enabling product analytics on production app data.</li>
+      </ul>
+    </div>
+
+    <div class="role-block">
+      <div class="role-head">
+        <span class="role-title">Email Deliverability Remediation Engagements</span>
+        <span class="role-meta">Gmail · SPF · DKIM · DMARC</span>
+      </div>
+      <ul>
+        <li>Diagnose and resolve spam, authentication, and reputation issues affecting production email systems — typically restoring deliverability within a single business week.</li>
+      </ul>
+    </div>
+
+    <div class="role-block">
+      <div class="role-head">
+        <span class="role-title">GCP-Hosted Game Servers</span>
+        <span class="role-meta">Compute Engine · Linux · Networking</span>
+      </div>
+      <ul>
+        <li>Production Minecraft Fabric server on Compute Engine with cost-aware sizing, automated backups to Cloud Storage, firewall hardening, and clean operational tooling.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section>
+    <h2>Education &amp; Continuing Learning</h2>
+    <p class="summary">
+      Self-directed Google Cloud certification path. Ongoing study across Vertex AI,
+      Gemini, GKE, and Workspace platform updates. Active participant in Google
+      Cloud Skills Boost &amp; Credly badge programs.
+    </p>
+  </section>
+</main>
+</body>
+</html>

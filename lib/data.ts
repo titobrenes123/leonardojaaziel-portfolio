@@ -237,10 +237,10 @@ export const projects = [
     tags: ['Gmail', 'SPF', 'DKIM', 'DMARC'],
   },
   {
-    title: 'iPSE Activity Logger',
+    title: 'Salesforce Activity Logger',
     blurb:
-      'Apps Script web app for documenting partner engagement reviews into Salesforce — built and maintained in production.',
-    tags: ['Apps Script', 'Salesforce', 'Workspace'],
+      'Apps Script + Firebase web app that documents client engagement reviews into Salesforce, with Gemini-assisted content polishing — built and maintained in production.',
+    tags: ['Apps Script', 'Salesforce', 'Firebase', 'Gemini'],
   },
 ];
 

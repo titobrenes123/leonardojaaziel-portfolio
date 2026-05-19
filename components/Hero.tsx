@@ -70,7 +70,11 @@ export default function Hero() {
                 <Terminal className="h-4 w-4" />
                 Get in touch
               </a>
-              <a href="/resume.pdf" className="btn-ghost">
+              <a
+                href="/resume.pdf"
+                download="Leonardo-Gonzalez-Resume.pdf"
+                className="btn-ghost"
+              >
                 <Download className="h-4 w-4" />
                 Resume
               </a>
