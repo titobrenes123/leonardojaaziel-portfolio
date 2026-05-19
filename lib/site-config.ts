@@ -18,7 +18,7 @@
  *
  * Free forever, no cookie banner needed by default.
  */
-export const CLARITY_PROJECT_ID = '';
+export const CLARITY_PROJECT_ID = 'wtesx240gs';
 
 /**
  * Google Analytics 4 — the Measurement ID is auto-detected from
