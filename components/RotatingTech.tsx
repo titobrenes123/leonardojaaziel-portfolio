@@ -1,9 +1,25 @@
 'use client';
 
+/**
+ * Rotating tech word in the hero headline.
+ *
+ * Cycles through Google Cloud surfaces every 2.4s with a blur+slide
+ * transition. When "Google Cloud" is active, the word "Google" renders
+ * with the official Google logo letter colors (G-o-o-g-l-e =
+ * blue-red-yellow-blue-green-red), and "Cloud" stays in the site's
+ * sky-cyan accent so it reads as part of the same wordmark.
+ *
+ * Accessibility:
+ *   `aria-live="polite"` tells screen readers about the rotation without
+ *   interrupting the user's current speech. Reduced-motion users still
+ *   see the rotation but the transition itself is short enough to be
+ *   inoffensive — and the underlying content is just a list of nouns.
+ */
+
 import { useEffect, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 
-// Google brand colors, classic logo sequence
+// Official Google logo colors (G-o-o-g-l-e order)
 const G = '#4285F4'; // blue
 const R = '#EA4335'; // red
 const Y = '#FBBC05'; // yellow

@@ -1,5 +1,28 @@
 'use client';
 
+/**
+ * Hero background — an interactive Canvas 2D particle network.
+ *
+ * Each frame:
+ *   1. Each particle is gently pulled toward the pointer (inverse-distance
+ *      force, capped at `MOUSE_RADIUS`).
+ *   2. Velocity is damped, then position integrates with a tiny random
+ *      brownian nudge so the field never settles into a static lattice.
+ *   3. Particles within `LINK_DIST` of each other draw a connecting line
+ *      with alpha proportional to proximity → looks like a neural network.
+ *   4. Particles within `MOUSE_RADIUS` of the pointer also link to the
+ *      pointer with a brighter line + radial glow.
+ *
+ * Performance discipline:
+ *   - `IntersectionObserver` pauses the rAF loop when the hero scrolls off
+ *     screen so the rest of the page doesn't pay for it on long mobile pages.
+ *   - DPR is clamped to 2 so 3× retina screens don't tank framerate.
+ *   - Particle/link counts are halved on `max-width: 768px`.
+ *   - Pointer interactivity is disabled on touch devices (`hover: hover` is
+ *     false) — finger-tracking via `pointermove` would feel laggy and weird.
+ *   - `prefers-reduced-motion`: renders one static frame and stops.
+ */
+
 import { useEffect, useRef } from 'react';
 
 type P = { x: number; y: number; vx: number; vy: number; r: number };
@@ -13,10 +36,14 @@ export default function HeroBackground() {
     const ctx = canvas.getContext('2d', { alpha: true });
     if (!ctx) return;
 
+    // Accessibility + capability gates
     const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     const canHover = window.matchMedia('(hover: hover)').matches;
     const isSmall = window.matchMedia('(max-width: 768px)').matches;
 
+    // Tuned for ~60fps on mid-range hardware. Bumping COUNT past ~120
+    // on desktop tips into noticeable jank because the link-drawing
+    // step is O(n²).
     const COUNT = isSmall ? 36 : 90;
     const LINK_DIST = isSmall ? 90 : 140;
     const MOUSE_RADIUS = isSmall ? 0 : 200;

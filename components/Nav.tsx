@@ -36,7 +36,17 @@ export default function Nav() {
     };
   }, [open]);
 
-  // Active section observer
+  // Active section observer.
+  //
+  // The asymmetric rootMargin (`-35% top, -55% bottom`) effectively defines
+  // a horizontal "active zone" band centered slightly above the viewport
+  // midline. A section is considered "in view" only when its content
+  // crosses that band — this avoids the active link flickering between
+  // two sections when one is mostly leaving and another is barely entering.
+  //
+  // When multiple sections satisfy the band (rare, on tall viewports), we
+  // pick the one highest on screen — the one the user is most likely
+  // currently reading.
   useEffect(() => {
     const sections = links
       .map((l) => document.getElementById(l.id))
@@ -46,7 +56,6 @@ export default function Nav() {
 
     const obs = new IntersectionObserver(
       (entries) => {
-        // Pick the entry highest in view
         const visible = entries
           .filter((e) => e.isIntersecting)
           .sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top);

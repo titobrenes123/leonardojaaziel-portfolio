@@ -1,3 +1,21 @@
+/**
+ * Single source of truth for everything the site renders.
+ *
+ * Edit this file to update the live site — no component changes needed.
+ * Each export below corresponds to a section component in `components/`:
+ *
+ *   profile        → Hero (name, title, tagline) + Contact + Footer
+ *   certifications → Certifications (Credly badge + verify link per card)
+ *   experience     → Experience (timeline entries)
+ *   skillGroups    → Skills (grouped chips)
+ *   projects       → Projects (case cards)
+ *   approach       → About (the four "How I work" principles)
+ *
+ * Credly badge fields are taken from the public badge page on credly.com:
+ *   `badge`  → the 340x340 image URL from `images.credly.com`
+ *   `credly` → the public verification page (used as the "verify" link)
+ */
+
 export const profile = {
   name: 'Leonardo Jaaziel',
   title: 'Google Cloud Architect · Workspace Specialist',

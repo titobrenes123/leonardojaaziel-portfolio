@@ -6,6 +6,8 @@ import { ExternalLink } from 'lucide-react';
 import { certifications } from '@/lib/data';
 import { SectionLabel } from './About';
 
+// Color-coded by certification tier — same accent pattern as Google's
+// own certification ladder docs: Professional > Associate > Foundational.
 const levelTone: Record<string, string> = {
   Professional: 'text-sky-400 border-sky-400/30 bg-sky-400/5',
   Associate: 'text-mint-400 border-mint-400/30 bg-mint-400/5',

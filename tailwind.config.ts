@@ -1,3 +1,24 @@
+/**
+ * Brand tokens for leonardojaaziel.com.
+ *
+ * Palette intent:
+ *   bg*    — Deep navy surfaces, from page base (`bg0`) up through raised
+ *            cards (`bg2`/`bg3`). Picked to harmonize with the navy suit in
+ *            the headshot, not pure black.
+ *   sky    — Primary accent. Used for headings' highlight word, buttons,
+ *            hover states, and the constellation network in the hero.
+ *   mint   — Live/operational status (the "available for projects" pill,
+ *            footer system status, Associate-tier cert badge).
+ *   violet — Reserved for the Foundational-tier cert badge to keep the
+ *            level-color encoding consistent.
+ *   ink    — Neutral text scale, cool slate. `ink-100` ≈ white,
+ *            `ink-400` ≈ muted body, `ink-500/600` for de-emphasis.
+ *
+ * Fonts:
+ *   sans    → Inter (body)
+ *   display → Sora (headings, stat values)
+ *   mono    → JetBrains Mono (eyebrows, code blocks, chips)
+ */
 import type { Config } from 'tailwindcss';
 
 const config: Config = {
@@ -6,6 +27,7 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
+        // Page surfaces — deepest → most elevated
         bg0: '#0a0f1c',
         bg1: '#0e1424',
         bg2: '#131a2e',
@@ -14,6 +36,7 @@ const config: Config = {
         line: 'rgba(148,163,184,0.10)',
         lineMid: 'rgba(148,163,184,0.18)',
         lineStrong: 'rgba(56,189,248,0.32)',
+        // Primary accent
         sky: {
           300: '#7dd3fc',
           400: '#38bdf8',
@@ -24,6 +47,7 @@ const config: Config = {
           300: '#67e8f9',
           400: '#22d3ee',
         },
+        // Status / operational (mint), tier badges (violet/rose), code highlights (amber)
         mint: {
           300: '#6ee7b7',
           400: '#34d399',
@@ -40,6 +64,7 @@ const config: Config = {
         amber: {
           300: '#fcd34d',
         },
+        // Neutral text scale
         ink: {
           100: '#f8fafc',
           200: '#e2e8f0',
