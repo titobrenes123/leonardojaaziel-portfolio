@@ -2,18 +2,12 @@ import type { Metadata } from 'next';
 import './globals.css';
 import Analytics from '@/components/Analytics';
 import Clarity from '@/components/Clarity';
+import en from '@/lib/i18n/en';
 
 export const metadata: Metadata = {
-  title: 'Leonardo Gonzalez — Google Cloud Architect · Workspace Specialist',
-  description:
-    'Google Cloud certified Architect & Engineer. 80+ projects shipped across GKE, Cloud Run, BigQuery, Vertex AI, and Workspace.',
+  title: en.meta.title,
+  description: en.meta.description,
   metadataBase: new URL('https://leonardojaaziel.com'),
-  openGraph: {
-    title: 'Leonardo Gonzalez — Google Cloud Architect · Workspace Specialist',
-    description:
-      'Cloud architecture, Workspace administration, automation, and AI integrations on Google Cloud.',
-    type: 'website',
-  },
   icons: { icon: '/favicon.svg' },
 };
 

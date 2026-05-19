@@ -3,8 +3,10 @@
 import { Sparkles, MapPin, Github, Linkedin } from 'lucide-react';
 import { profile } from '@/lib/data';
 import { trackEvent } from '@/lib/analytics';
+import { useI18n } from '@/lib/i18n/context';
 
 export default function Footer() {
+  const { dict } = useI18n();
   return (
     <footer className="relative mt-16 sm:mt-24 border-t border-white/5">
       <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-sky-400/30 to-transparent" />
@@ -17,22 +19,20 @@ export default function Footer() {
               Leonardo <span className="text-sky-400">Gonzalez</span>.
             </h3>
             <p className="mt-5 max-w-md text-[16px] sm:text-[17px] leading-[1.7] text-ink-300">
-              Crafted with care in El Salvador. Shipped to wherever your cloud
-              happens to live. Open to new architectures, migrations, and the
-              occasional 3&nbsp;a.m. deliverability fire.
+              {dict.footer.tagline}
             </p>
 
             <div className="mt-6 flex flex-wrap items-center gap-2">
               <span className="inline-flex items-center gap-1.5 rounded-full border border-sky-400/30 bg-sky-400/8 px-3 py-1.5 text-[11px] font-mono uppercase tracking-eyebrow text-sky-400">
                 <Sparkles className="h-3 w-3" />
-                Vibe Coder
+                {dict.footer.chipVibe}
               </span>
               <span className="inline-flex items-center gap-1.5 rounded-full border border-white/10 bg-white/[0.03] px-3 py-1.5 text-[11px] font-mono uppercase tracking-eyebrow text-ink-300">
-                Google Cloud Architect
+                {dict.footer.chipRole}
               </span>
               <span className="inline-flex items-center gap-1.5 rounded-full border border-white/10 bg-white/[0.03] px-3 py-1.5 text-[11px] font-mono uppercase tracking-eyebrow text-ink-300">
                 <MapPin className="h-3 w-3" />
-                El Salvador · LATAM
+                {dict.footer.chipLocation}
               </span>
             </div>
           </div>
@@ -41,7 +41,7 @@ export default function Footer() {
           <div className="flex flex-col gap-6">
             <div>
               <p className="text-[10.5px] font-mono uppercase tracking-eyebrow text-ink-400">
-                Reach me
+                {dict.footer.reachMe}
               </p>
               <a
                 href={`mailto:${profile.email}`}
@@ -83,11 +83,11 @@ export default function Footer() {
             <span className="text-ink-500">&copy;</span> {new Date().getFullYear()}{' '}
             <span className="text-ink-300">Leonardo Gonzalez</span>
             <span className="mx-2 text-ink-600">/</span>
-            All systems his own
+            {dict.footer.copyrightSuffix}
           </div>
 
           <div className="flex items-center gap-3 font-mono text-[11px] text-ink-500">
-            <span className="hidden md:inline">handcrafted with</span>
+            <span className="hidden md:inline">{dict.footer.handcrafted}</span>
             <a
               href="https://nextjs.org"
               target="_blank"
@@ -118,7 +118,7 @@ export default function Footer() {
 
           <div className="flex items-center gap-2 font-mono text-[11px] text-ink-400">
             <span className="inline-block h-1.5 w-1.5 rounded-full bg-mint-400 animate-pulseDot" />
-            All systems operational
+            {dict.footer.systemsOperational}
           </div>
         </div>
       </div>

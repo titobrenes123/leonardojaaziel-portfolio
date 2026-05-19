@@ -1,12 +1,12 @@
 import HomeContent from '@/components/HomeContent';
-import en from '@/lib/i18n/en';
+import es from '@/lib/i18n/es';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: en.meta.title,
-  description: en.meta.description,
+  title: es.meta.title,
+  description: es.meta.description,
   alternates: {
-    canonical: 'https://leonardojaaziel.com/',
+    canonical: 'https://leonardojaaziel.com/es',
     languages: {
       en: 'https://leonardojaaziel.com/',
       es: 'https://leonardojaaziel.com/es',
@@ -14,14 +14,14 @@ export const metadata: Metadata = {
     },
   },
   openGraph: {
-    title: en.meta.title,
-    description: en.meta.description,
-    locale: 'en_US',
+    title: es.meta.title,
+    description: es.meta.description,
+    locale: 'es_ES',
     type: 'website',
-    url: 'https://leonardojaaziel.com/',
+    url: 'https://leonardojaaziel.com/es',
   },
 };
 
-export default function Home() {
-  return <HomeContent lang="en" />;
+export default function HomeEs() {
+  return <HomeContent lang="es" />;
 }

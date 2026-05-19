@@ -5,14 +5,17 @@ import { Mail, Linkedin, Github, Briefcase, ArrowRight } from 'lucide-react';
 import { profile } from '@/lib/data';
 import { SectionLabel } from './About';
 import { trackEvent } from '@/lib/analytics';
+import { useI18n } from '@/lib/i18n/context';
 
 export default function Contact() {
+  const { dict } = useI18n();
   return (
     <section id="contact" className="py-20 sm:py-24 scroll-mt">
       <div className="mx-auto max-w-[1240px] px-5 sm:px-6 lg:px-10">
-        <SectionLabel kicker="06 // contact" />
+        <SectionLabel kicker={dict.contact.section} />
         <h2 className="display mt-5 text-[clamp(2.2rem,4.8vw,4rem)] max-w-[24ch]">
-          Have a cloud project? <span className="text-sky-400">Let&apos;s talk.</span>
+          {dict.contact.headingPart1}
+          <span className="text-sky-400">{dict.contact.headingPart2}</span>
         </h2>
 
         <motion.div
@@ -28,15 +31,13 @@ export default function Contact() {
             <div>
               <p className="eyebrow">
                 <span className="dot" />
-                discovery call · free · 30 minutes
+                {dict.contact.eyebrow}
               </p>
               <h3 className="mt-5 font-display text-2xl md:text-3xl text-ink-100 leading-tight tracking-display">
-                Send me what you&apos;re working on.
+                {dict.contact.leadHeading}
               </h3>
               <p className="mt-5 text-ink-300 text-[17px] sm:text-[18px] leading-[1.7] max-w-md">
-                Migration, GCP architecture review, deliverability mess, or an AI
-                workflow you want wired up — drop me a line. I usually answer within
-                a business day in EN or ES.
+                {dict.contact.leadBody}
               </p>
               <a
                 href={`mailto:${profile.email}`}

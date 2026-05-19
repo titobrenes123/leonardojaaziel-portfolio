@@ -2,22 +2,26 @@
 
 import { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Menu, X, ArrowRight } from 'lucide-react';
+import { Menu, X, ArrowRight, Languages } from 'lucide-react';
 import { trackEvent } from '@/lib/analytics';
-
-const links = [
-  { href: '#about', label: 'About', id: 'about', n: '01' },
-  { href: '#stack', label: 'Stack', id: 'stack', n: '02' },
-  { href: '#experience', label: 'Experience', id: 'experience', n: '03' },
-  { href: '#certifications', label: 'Certifications', id: 'certifications', n: '04' },
-  { href: '#projects', label: 'Projects', id: 'projects', n: '05' },
-  { href: '#contact', label: 'Contact', id: 'contact', n: '06' },
-];
+import { useI18n, otherLocaleHref } from '@/lib/i18n/context';
 
 export default function Nav() {
+  const { dict, lang } = useI18n();
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
   const [active, setActive] = useState<string>('');
+
+  // Section IDs stay in English across both locales — anchors are
+  // language-agnostic; only labels translate.
+  const links = [
+    { href: '#about', label: dict.nav.about, id: 'about', n: '01' },
+    { href: '#stack', label: dict.nav.stack, id: 'stack', n: '02' },
+    { href: '#experience', label: dict.nav.experience, id: 'experience', n: '03' },
+    { href: '#certifications', label: dict.nav.certifications, id: 'certifications', n: '04' },
+    { href: '#projects', label: dict.nav.projects, id: 'projects', n: '05' },
+    { href: '#contact', label: dict.nav.contact, id: 'contact', n: '06' },
+  ];
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 12);
@@ -37,17 +41,6 @@ export default function Nav() {
     };
   }, [open]);
 
-  // Active section observer.
-  //
-  // The asymmetric rootMargin (`-35% top, -55% bottom`) effectively defines
-  // a horizontal "active zone" band centered slightly above the viewport
-  // midline. A section is considered "in view" only when its content
-  // crosses that band — this avoids the active link flickering between
-  // two sections when one is mostly leaving and another is barely entering.
-  //
-  // When multiple sections satisfy the band (rare, on tall viewports), we
-  // pick the one highest on screen — the one the user is most likely
-  // currently reading.
   useEffect(() => {
     const sections = links
       .map((l) => document.getElementById(l.id))
@@ -67,6 +60,7 @@ export default function Nav() {
 
     sections.forEach((s) => obs.observe(s));
     return () => obs.disconnect();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleLink = () => setOpen(false);
@@ -83,22 +77,20 @@ export default function Nav() {
       }`}
     >
       <nav className="mx-auto flex max-w-[1240px] items-center justify-between px-5 sm:px-6 lg:px-10 py-4 sm:py-5">
-        {/* Brand */}
         <a
           href="#top"
           onClick={handleLink}
           className="group flex flex-col leading-tight transition"
-          aria-label="Leonardo Gonzalez — home"
+          aria-label={`Leonardo Gonzalez — ${dict.nav.role}`}
         >
           <span className="text-[16px] sm:text-[17px] font-semibold tracking-tight text-ink-100 group-hover:text-sky-400 transition-colors">
             Leonardo Gonzalez
           </span>
           <span className="text-[10px] sm:text-[10.5px] font-mono tracking-eyebrow text-ink-400 uppercase">
-            Cloud Architect
+            {dict.nav.role}
           </span>
         </a>
 
-        {/* Center links — desktop */}
         <ul className="hidden md:flex items-center gap-1 lg:gap-2 text-sm">
           {links.map((l) => {
             const isActive = active === l.id;
@@ -107,9 +99,7 @@ export default function Nav() {
                 <a
                   href={l.href}
                   className={`relative inline-flex items-center gap-1.5 px-3 py-2 rounded-md text-[13px] transition-colors ${
-                    isActive
-                      ? 'text-ink-100'
-                      : 'text-ink-400 hover:text-ink-100'
+                    isActive ? 'text-ink-100' : 'text-ink-400 hover:text-ink-100'
                   }`}
                 >
                   <span className={`font-mono text-[10.5px] ${isActive ? 'text-sky-400' : 'text-sky-400/60'}`}>
@@ -129,8 +119,18 @@ export default function Nav() {
           })}
         </ul>
 
-        {/* Right cluster */}
         <div className="flex items-center gap-2">
+          {/* Language switcher */}
+          <a
+            href={otherLocaleHref(lang)}
+            onClick={() => trackEvent('lang_switch', { from: lang, to: lang === 'es' ? 'en' : 'es' })}
+            className="hidden sm:inline-flex items-center gap-1.5 rounded-lg border border-white/10 bg-white/[0.03] px-3 py-2 text-[12px] font-mono uppercase tracking-eyebrow text-ink-300 hover:text-sky-400 hover:border-sky-400/40 transition"
+            aria-label={`Switch to ${dict.nav.switchToOther}`}
+          >
+            <Languages className="h-3.5 w-3.5" />
+            {dict.nav.switchToOther}
+          </a>
+
           <a
             href="#contact"
             onClick={() => {
@@ -139,13 +139,14 @@ export default function Nav() {
             }}
             className="inline-flex items-center gap-1.5 rounded-lg bg-gradient-to-b from-sky-400 to-sky-500 px-3.5 sm:px-4 py-2 text-[12.5px] sm:text-[13px] font-semibold text-bg0 shadow-[0_8px_24px_rgba(56,189,248,0.25)] hover:shadow-[0_12px_36px_rgba(56,189,248,0.4)] hover:-translate-y-px transition-all group"
           >
-            Hire Me
+            {dict.nav.hireMe}
             <ArrowRight className="h-3.5 w-3.5 transition group-hover:translate-x-0.5" />
           </a>
+
           <button
             type="button"
             onClick={() => setOpen((v) => !v)}
-            aria-label={open ? 'Close menu' : 'Open menu'}
+            aria-label={open ? dict.nav.closeMenu : dict.nav.openMenu}
             aria-expanded={open}
             className="md:hidden flex h-9 w-9 items-center justify-center rounded-lg border border-white/10 bg-white/[0.03] text-ink-200 hover:text-sky-400 hover:border-sky-400/40 transition"
           >
@@ -183,6 +184,17 @@ export default function Nav() {
                   </li>
                 );
               })}
+              {/* Mobile language switcher */}
+              <li className="sm:hidden">
+                <a
+                  href={otherLocaleHref(lang)}
+                  onClick={() => trackEvent('lang_switch', { from: lang, to: lang === 'es' ? 'en' : 'es', location: 'mobile_menu' })}
+                  className="flex items-center gap-3 py-3 text-[14px] font-mono uppercase tracking-eyebrow text-ink-300 hover:text-sky-400 transition border-t border-white/5 mt-1"
+                >
+                  <Languages className="h-4 w-4" />
+                  {dict.nav.switchToOther}
+                </a>
+              </li>
             </ul>
           </motion.div>
         )}

@@ -1,20 +1,22 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { experience } from '@/lib/data';
 import { SectionLabel } from './About';
+import { useI18n } from '@/lib/i18n/context';
 
 export default function Experience() {
+  const { dict } = useI18n();
   return (
     <section id="experience" className="py-20 sm:py-24 scroll-mt">
       <div className="mx-auto max-w-[1240px] px-5 sm:px-6 lg:px-10">
-        <SectionLabel kicker="03 // experience" />
+        <SectionLabel kicker={dict.experience.section} />
         <h2 className="display mt-5 text-[clamp(2.2rem,4.8vw,4rem)] max-w-[24ch]">
-          Where I&apos;ve <span className="text-sky-400">shipped.</span>
+          {dict.experience.headingPart1}
+          <span className="text-sky-400">{dict.experience.headingShipped}</span>
         </h2>
 
         <ol className="mt-14 relative border-l border-sky-400/20 ml-3 max-w-3xl">
-          {experience.map((e, i) => (
+          {dict.experience.roles.map((e, i) => (
             <motion.li
               key={e.role}
               initial={{ opacity: 0, x: -12 }}
@@ -27,7 +29,9 @@ export default function Experience() {
                 <span className="h-2 w-2 rounded-full bg-sky-400 shadow-[0_0_12px_rgba(56,189,248,0.7)]" />
               </span>
               <div className="flex flex-wrap items-baseline gap-3">
-                <h3 className="text-[22px] sm:text-[24px] text-ink-100 font-semibold tracking-tight">{e.role}</h3>
+                <h3 className="text-[22px] sm:text-[24px] text-ink-100 font-semibold tracking-tight">
+                  {e.role}
+                </h3>
                 <span className="font-mono text-[12px] uppercase tracking-eyebrow text-sky-400">
                   {e.period}
                 </span>

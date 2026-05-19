@@ -2,29 +2,28 @@
 
 import { motion } from 'framer-motion';
 import { Cloud, Globe, Server, Code2, Sparkles } from 'lucide-react';
-import { skillGroups } from '@/lib/data';
 import { SectionLabel } from './About';
+import { useI18n } from '@/lib/i18n/context';
 
-const iconMap = {
-  cloud: Cloud,
-  globe: Globe,
-  server: Server,
-  code: Code2,
-  sparkles: Sparkles,
-};
+// Icons matched by index against `dict.skills.groups`. Order in en.ts/es.ts
+// MUST match this array.
+const icons = [Cloud, Globe, Server, Code2, Sparkles];
 
 export default function Skills() {
+  const { dict } = useI18n();
   return (
     <section id="stack" className="py-20 sm:py-24 scroll-mt">
       <div className="mx-auto max-w-[1240px] px-5 sm:px-6 lg:px-10">
-        <SectionLabel kicker="02 // stack" />
+        <SectionLabel kicker={dict.skills.section} />
         <h2 className="display mt-5 text-[clamp(2.2rem,4.8vw,4rem)] max-w-[22ch]">
-          The <span className="text-sky-400">tools</span> I use daily.
+          {dict.skills.headingPart1}
+          <span className="text-sky-400">{dict.skills.headingTools}</span>
+          {dict.skills.headingPart2}
         </h2>
 
         <div className="mt-12 grid md:grid-cols-2 lg:grid-cols-3 gap-5">
-          {skillGroups.map((g, i) => {
-            const Icon = iconMap[g.icon as keyof typeof iconMap] || Code2;
+          {dict.skills.groups.map((g, i) => {
+            const Icon = icons[i] || Code2;
             return (
               <motion.div
                 key={g.name}
