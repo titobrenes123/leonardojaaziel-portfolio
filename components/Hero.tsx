@@ -6,6 +6,7 @@ import { ArrowRight, Download, Terminal } from 'lucide-react';
 import HeroBackground from './HeroBackground';
 import RotatingTech from './RotatingTech';
 import CountUp from './CountUp';
+import { trackEvent } from '@/lib/analytics';
 
 export default function Hero() {
   return (
@@ -62,11 +63,19 @@ export default function Hero() {
               transition={{ duration: 0.6, delay: 0.28 }}
               className="mt-8 sm:mt-9 flex flex-wrap gap-2.5 sm:gap-3"
             >
-              <a href="#projects" className="btn-primary group">
+              <a
+                href="#projects"
+                className="btn-primary group"
+                onClick={() => trackEvent('cta_click', { location: 'hero', target: 'projects' })}
+              >
                 See projects
                 <ArrowRight className="h-4 w-4 transition group-hover:translate-x-0.5" />
               </a>
-              <a href="#contact" className="btn-ghost">
+              <a
+                href="#contact"
+                className="btn-ghost"
+                onClick={() => trackEvent('cta_click', { location: 'hero', target: 'contact' })}
+              >
                 <Terminal className="h-4 w-4" />
                 Get in touch
               </a>
@@ -74,6 +83,7 @@ export default function Hero() {
                 href="/resume.pdf"
                 download="Leonardo-Gonzalez-Resume.pdf"
                 className="btn-ghost"
+                onClick={() => trackEvent('resume_download', { location: 'hero', format: 'pdf' })}
               >
                 <Download className="h-4 w-4" />
                 Resume

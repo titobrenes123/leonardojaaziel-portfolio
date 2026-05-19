@@ -5,6 +5,7 @@ import { motion } from 'framer-motion';
 import { ExternalLink } from 'lucide-react';
 import { certifications } from '@/lib/data';
 import { SectionLabel } from './About';
+import { trackEvent } from '@/lib/analytics';
 
 // Color-coded by certification tier — same accent pattern as Google's
 // own certification ladder docs: Professional > Associate > Foundational.
@@ -43,6 +44,7 @@ export default function Certifications() {
                   href={c.credly}
                   target="_blank"
                   rel="noreferrer"
+                  onClick={() => trackEvent('cert_verify', { cert: c.short, surface: 'badge' })}
                   className="relative h-20 w-20 sm:h-[88px] sm:w-[88px] flex-shrink-0 rounded-xl overflow-hidden border border-white/8 bg-bg2 transition group-hover:border-sky-400/40"
                   aria-label={`Verify ${c.short} on Credly`}
                 >
@@ -91,6 +93,7 @@ export default function Certifications() {
                 href={c.credly}
                 target="_blank"
                 rel="noreferrer"
+                onClick={() => trackEvent('cert_verify', { cert: c.short, surface: 'link' })}
                 className="mt-5 inline-flex items-center gap-1.5 text-[13px] font-mono text-sky-400 hover:text-sky-300 transition self-start"
               >
                 verify on credly

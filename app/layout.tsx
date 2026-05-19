@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import './globals.css';
+import Analytics from '@/components/Analytics';
 
 export const metadata: Metadata = {
   title: 'Leonardo Gonzalez — Google Cloud Architect · Workspace Specialist',
@@ -30,7 +31,10 @@ export default function RootLayout({
           rel="stylesheet"
         />
       </head>
-      <body className="antialiased bg-bg0 text-ink-200">{children}</body>
+      <body className="antialiased bg-bg0 text-ink-200">
+        {children}
+        <Analytics />
+      </body>
     </html>
   );
 }

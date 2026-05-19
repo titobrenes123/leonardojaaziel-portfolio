@@ -4,6 +4,7 @@ import { motion } from 'framer-motion';
 import { Mail, Linkedin, Github, Briefcase, ArrowRight } from 'lucide-react';
 import { profile } from '@/lib/data';
 import { SectionLabel } from './About';
+import { trackEvent } from '@/lib/analytics';
 
 export default function Contact() {
   return (
@@ -40,6 +41,7 @@ export default function Contact() {
               <a
                 href={`mailto:${profile.email}`}
                 className="btn-primary mt-7 group !rounded-full"
+                onClick={() => trackEvent('email_click', { location: 'contact' })}
               >
                 <Mail className="h-4 w-4" />
                 {profile.email}
@@ -97,6 +99,7 @@ function ContactLink({
         href={href}
         target="_blank"
         rel="noreferrer"
+        onClick={() => trackEvent('social_click', { network: label.toLowerCase(), location: 'contact' })}
         className="flex items-center justify-between gap-4 rounded-xl border border-white/8 bg-white/[0.02] p-4 hover:border-sky-400/40 hover:bg-sky-400/5 transition group"
       >
         <div className="flex items-center gap-3">

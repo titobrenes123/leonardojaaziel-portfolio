@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X, ArrowRight } from 'lucide-react';
+import { trackEvent } from '@/lib/analytics';
 
 const links = [
   { href: '#about', label: 'About', id: 'about', n: '01' },
@@ -132,7 +133,10 @@ export default function Nav() {
         <div className="flex items-center gap-2">
           <a
             href="#contact"
-            onClick={handleLink}
+            onClick={() => {
+              trackEvent('cta_click', { location: 'nav', target: 'hire_me' });
+              handleLink();
+            }}
             className="inline-flex items-center gap-1.5 rounded-lg bg-gradient-to-b from-sky-400 to-sky-500 px-3.5 sm:px-4 py-2 text-[12.5px] sm:text-[13px] font-semibold text-bg0 shadow-[0_8px_24px_rgba(56,189,248,0.25)] hover:shadow-[0_12px_36px_rgba(56,189,248,0.4)] hover:-translate-y-px transition-all group"
           >
             Hire Me

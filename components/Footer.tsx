@@ -1,5 +1,8 @@
+'use client';
+
 import { Sparkles, MapPin, Github, Linkedin } from 'lucide-react';
 import { profile } from '@/lib/data';
+import { trackEvent } from '@/lib/analytics';
 
 export default function Footer() {
   return (
@@ -42,6 +45,7 @@ export default function Footer() {
               </p>
               <a
                 href={`mailto:${profile.email}`}
+                onClick={() => trackEvent('email_click', { location: 'footer' })}
                 className="mt-3 inline-flex items-center text-[17px] sm:text-[19px] font-semibold tracking-tight text-ink-100 hover:text-sky-400 transition"
               >
                 {profile.email}
@@ -54,6 +58,7 @@ export default function Footer() {
                 target="_blank"
                 rel="noreferrer"
                 aria-label="GitHub"
+                onClick={() => trackEvent('social_click', { network: 'github', location: 'footer' })}
                 className="flex h-10 w-10 items-center justify-center rounded-lg border border-white/8 bg-white/[0.02] text-ink-300 hover:text-sky-400 hover:border-sky-400/40 transition"
               >
                 <Github className="h-4 w-4" />
@@ -63,6 +68,7 @@ export default function Footer() {
                 target="_blank"
                 rel="noreferrer"
                 aria-label="LinkedIn"
+                onClick={() => trackEvent('social_click', { network: 'linkedin', location: 'footer' })}
                 className="flex h-10 w-10 items-center justify-center rounded-lg border border-white/8 bg-white/[0.02] text-ink-300 hover:text-sky-400 hover:border-sky-400/40 transition"
               >
                 <Linkedin className="h-4 w-4" />
