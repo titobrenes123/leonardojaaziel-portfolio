@@ -51,7 +51,7 @@ export default function Hero() {
               transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1], delay: 0.18 }}
               className="mt-6 sm:mt-7 max-w-xl text-ink-300 text-[17px] sm:text-[18.5px] leading-[1.7]"
             >
-              I&apos;m <span className="text-ink-100 font-medium">Leonardo Jaaziel</span>.
+              I&apos;m <span className="text-ink-100 font-medium">Leonardo Gonzalez</span>.
               I design GCP infrastructure, run Google Workspace at scale, and wire
               automation and AI into business workflows that have to keep working.
             </motion.p>
@@ -113,7 +113,7 @@ export default function Hero() {
               <div className="frame">
                 <Image
                   src="/leonardo-portrait.png"
-                  alt="Leonardo Jaaziel"
+                  alt="Leonardo Gonzalez"
                   fill
                   priority
                   sizes="(min-width:1024px) 440px, (min-width:640px) 360px, 80vw"
@@ -138,7 +138,7 @@ export default function Hero() {
                 <span className="tab">~/whoami</span>
               </div>
               <pre className="code-block px-4 py-3 text-[12.5px] leading-[1.7] whitespace-pre-wrap">
-<span className="c-com">$</span> <span className="c-fn">whoami</span>{'\n'}<span className="c-prop">name</span>: <span className="c-str">&quot;Leonardo Jaaziel&quot;</span>{'\n'}<span className="c-prop">role</span>: <span className="c-str">&quot;Cloud Architect&quot;</span>{'\n'}<span className="c-prop">stack</span>: [<span className="c-str">&quot;GCP&quot;</span>, <span className="c-str">&quot;Workspace&quot;</span>]{'\n'}<span className="c-com">$</span> <span className="cursor" />
+<span className="c-com">$</span> <span className="c-fn">whoami</span>{'\n'}<span className="c-prop">name</span>: <span className="c-str">&quot;Leonardo Gonzalez&quot;</span>{'\n'}<span className="c-prop">role</span>: <span className="c-str">&quot;Cloud Architect&quot;</span>{'\n'}<span className="c-prop">stack</span>: [<span className="c-str">&quot;GCP&quot;</span>, <span className="c-str">&quot;Workspace&quot;</span>]{'\n'}<span className="c-com">$</span> <span className="cursor" />
               </pre>
             </motion.div>
           </motion.div>

@@ -17,7 +17,7 @@
  */
 
 export const profile = {
-  name: 'Leonardo Jaaziel',
+  name: 'Leonardo Gonzalez',
   title: 'Google Cloud Architect · Workspace Specialist',
   location: 'El Salvador',
   languages: 'English · Spanish',
@@ -29,7 +29,7 @@ export const profile = {
     'Google Cloud certified engineer with 5+ years building and operating cloud and collaboration systems for businesses across the Americas.',
   longBio:
     "I'm a Google Cloud certified engineer working at the intersection of cloud infrastructure and the Google ecosystem. My day-to-day is GCP architecture, Workspace administration, and stitching automation and AI into business workflows that have to keep running. Most of what I deliver is invisible until it isn't — clean migrations, healthy mail systems, reliable backends, and integrations you don't have to think about.",
-  email: 'hello@leonardojaaziel.com',
+  email: 'info@leonardojaaziel.com',
   links: {
     linkedin: 'https://www.linkedin.com/in/leonardojaaziel',
     github: 'https://github.com/leonardojaaziel',

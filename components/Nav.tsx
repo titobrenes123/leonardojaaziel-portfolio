@@ -87,10 +87,10 @@ export default function Nav() {
           href="#top"
           onClick={handleLink}
           className="group flex flex-col leading-tight transition"
-          aria-label="Leonardo Jaaziel — home"
+          aria-label="Leonardo Gonzalez — home"
         >
           <span className="text-[16px] sm:text-[17px] font-semibold tracking-tight text-ink-100 group-hover:text-sky-400 transition-colors">
-            Leonardo Jaaziel
+            Leonardo Gonzalez
           </span>
           <span className="text-[10px] sm:text-[10.5px] font-mono tracking-eyebrow text-ink-400 uppercase">
             Cloud Architect

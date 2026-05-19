@@ -11,7 +11,7 @@ export default function Footer() {
           {/* Brand block */}
           <div>
             <h3 className="font-display text-[clamp(2.2rem,5vw,3.6rem)] font-bold tracking-tight leading-[1.02] text-ink-100">
-              Leonardo <span className="text-sky-400">Jaaziel</span>.
+              Leonardo <span className="text-sky-400">Gonzalez</span>.
             </h3>
             <p className="mt-5 max-w-md text-[16px] sm:text-[17px] leading-[1.7] text-ink-300">
               Crafted with care in El Salvador. Shipped to wherever your cloud
@@ -75,7 +75,7 @@ export default function Footer() {
         <div className="mt-12 sm:mt-16 pt-6 border-t border-white/5 flex flex-col md:flex-row items-center justify-between gap-3 text-center md:text-left">
           <div className="font-mono text-[11.5px] sm:text-[12px] uppercase tracking-eyebrow text-ink-400">
             <span className="text-ink-500">&copy;</span> {new Date().getFullYear()}{' '}
-            <span className="text-ink-300">Leonardo Jaaziel</span>
+            <span className="text-ink-300">Leonardo Gonzalez</span>
             <span className="mx-2 text-ink-600">/</span>
             All systems his own
           </div>

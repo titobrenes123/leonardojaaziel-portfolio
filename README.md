@@ -4,7 +4,7 @@
 
 # leonardojaaziel.com
 
-Personal portfolio for **Leonardo Jaaziel** — Google Cloud Architect & Workspace Specialist.
+Personal portfolio for **Leonardo Gonzalez** — Google Cloud Architect & Workspace Specialist.
 
 [**Live site →**](https://leonardojaaziel-portfolio.web.app) &nbsp;·&nbsp;
 [Custom domain (planned)](https://leonardojaaziel.com)

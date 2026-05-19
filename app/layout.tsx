@@ -2,12 +2,12 @@ import type { Metadata } from 'next';
 import './globals.css';
 
 export const metadata: Metadata = {
-  title: 'Leonardo Jaaziel — Google Cloud Architect · Workspace Specialist',
+  title: 'Leonardo Gonzalez — Google Cloud Architect · Workspace Specialist',
   description:
     'Google Cloud certified Architect & Engineer. 80+ projects shipped across GKE, Cloud Run, BigQuery, Vertex AI, and Workspace.',
   metadataBase: new URL('https://leonardojaaziel.com'),
   openGraph: {
-    title: 'Leonardo Jaaziel — Google Cloud Architect · Workspace Specialist',
+    title: 'Leonardo Gonzalez — Google Cloud Architect · Workspace Specialist',
     description:
       'Cloud architecture, Workspace administration, automation, and AI integrations on Google Cloud.',
     type: 'website',
