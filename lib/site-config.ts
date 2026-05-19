@@ -21,9 +21,13 @@
 export const CLARITY_PROJECT_ID = 'wtesx240gs';
 
 /**
- * Google Analytics 4 — the Measurement ID is auto-detected from
- * Firebase Hosting's `/__/firebase/init.json` once you enable Analytics
- * in the Firebase Console. No setting needed here.
+ * Google Analytics 4 Measurement ID — shown in the Firebase Console at
+ * Project settings → General → Your apps → (web app) → SDK config.
+ * Format: `G-XXXXXXXXXX`.
  *
- * See `components/Analytics.tsx`.
+ * Hardcoded here rather than auto-detected from Firebase Hosting's
+ * `/__/firebase/init.json` because that endpoint serves the *first*
+ * registered Web App's config, which may not be the one linked to
+ * Analytics. Pasting the ID directly is more reliable.
  */
+export const GA_MEASUREMENT_ID = 'G-TJFVLD6BN1';
