@@ -3,21 +3,23 @@
 /**
  * Rotating tech word in the hero headline.
  *
- * Cycles through Google Cloud surfaces every 2.4s with a blur+slide
- * transition. When "Google Cloud" is active, the word "Google" renders
- * with the official Google logo letter colors (G-o-o-g-l-e =
- * blue-red-yellow-blue-green-red), and "Cloud" stays in the site's
- * sky-cyan accent so it reads as part of the same wordmark.
+ * Cycles through Google Cloud surfaces every 2.4s. When "Google Cloud"
+ * is active, the word "Google" renders with the official Google logo
+ * letter colors (G-o-o-g-l-e = blue-red-yellow-blue-green-red).
  *
- * Accessibility:
- *   `aria-live="polite"` tells screen readers about the rotation without
- *   interrupting the user's current speech. Reduced-motion users still
- *   see the rotation but the transition itself is short enough to be
- *   inoffensive — and the underlying content is just a list of nouns.
+ * Layout-shift fix:
+ *   All variants are rendered in the same CSS grid cell (col-start-1 /
+ *   row-start-1). The container's width is implicitly `max(widths)`,
+ *   so the surrounding heading never reflows when a long word ("Cloud
+ *   Functions") rotates in after a short one ("GKE"). Only the active
+ *   variant is opaque; others are invisible but still occupy the grid
+ *   cell for sizing.
+ *
+ * The blinking cursor lives inside each variant so it sits right after
+ * the active word, not at the right edge of the longest variant.
  */
 
 import { useEffect, useState } from 'react';
-import { AnimatePresence, motion } from 'framer-motion';
 
 // Official Google logo colors (G-o-o-g-l-e order)
 const G = '#4285F4'; // blue
@@ -26,9 +28,8 @@ const Y = '#FBBC05'; // yellow
 const E = '#34A853'; // green
 
 function GoogleWord() {
-  // G o o g l e  →  blue red yellow blue green red
   return (
-    <span className="whitespace-nowrap">
+    <>
       <span style={{ color: G }}>G</span>
       <span style={{ color: R }}>o</span>
       <span style={{ color: Y }}>o</span>
@@ -36,7 +37,7 @@ function GoogleWord() {
       <span style={{ color: E }}>l</span>
       <span style={{ color: R }}>e</span>
       <span className="text-sky-400"> Cloud</span>
-    </span>
+    </>
   );
 }
 
@@ -53,30 +54,36 @@ const items: Item[] = [
 ];
 
 export default function RotatingTech() {
-  const [i, setI] = useState(0);
+  const [active, setActive] = useState(0);
 
   useEffect(() => {
     const id = setInterval(() => {
-      setI((v) => (v + 1) % items.length);
+      setActive((v) => (v + 1) % items.length);
     }, 2400);
     return () => clearInterval(id);
   }, []);
 
   return (
-    <span className="relative inline-block align-baseline" aria-live="polite">
-      <AnimatePresence mode="wait" initial={false}>
-        <motion.span
-          key={items[i].key}
-          initial={{ y: '0.55em', opacity: 0, filter: 'blur(4px)' }}
-          animate={{ y: 0, opacity: 1, filter: 'blur(0px)' }}
-          exit={{ y: '-0.55em', opacity: 0, filter: 'blur(4px)' }}
-          transition={{ duration: 0.42, ease: [0.16, 1, 0.3, 1] }}
-          className="inline-block"
+    <span
+      className="relative inline-grid align-baseline whitespace-nowrap"
+      aria-live="polite"
+    >
+      {items.map((item, i) => (
+        <span
+          key={item.key}
+          className="col-start-1 row-start-1 whitespace-nowrap transition-[opacity,transform,filter] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]"
+          aria-hidden={i !== active}
+          style={{
+            opacity: i === active ? 1 : 0,
+            transform: i === active ? 'translateY(0)' : 'translateY(0.4em)',
+            filter: i === active ? 'blur(0)' : 'blur(6px)',
+            pointerEvents: i === active ? 'auto' : 'none',
+          }}
         >
-          {items[i].node}
-        </motion.span>
-      </AnimatePresence>
-      <span className="cursor" />
+          {item.node}
+          <span className="cursor" />
+        </span>
+      ))}
     </span>
   );
 }

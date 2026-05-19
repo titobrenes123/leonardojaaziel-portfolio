@@ -53,25 +53,25 @@ export default function Contact() {
               <ContactLink
                 icon={<Linkedin className="h-4 w-4" />}
                 label="LinkedIn"
-                value="linkedin.com/in/leonardojaaziel"
+                value="@leonardojaaziel"
                 href={profile.links.linkedin}
               />
               <ContactLink
                 icon={<Github className="h-4 w-4" />}
                 label="GitHub"
-                value="github.com/leonardojaaziel"
+                value="@titobrenes123"
                 href={profile.links.github}
               />
               <ContactLink
                 icon={<Briefcase className="h-4 w-4" />}
                 label="Fiverr"
-                value="fiverr.com/leonardojaaziel"
+                value="@leonardojaaziel"
                 href={profile.links.fiverr}
               />
               <ContactLink
                 icon={<Briefcase className="h-4 w-4" />}
                 label="Upwork"
-                value="upwork.com/freelancers/leonardojaaziel"
+                value="@leonardojaaziel"
                 href={profile.links.upwork}
               />
             </ul>
@@ -100,20 +100,20 @@ function ContactLink({
         target="_blank"
         rel="noreferrer"
         onClick={() => trackEvent('social_click', { network: label.toLowerCase(), location: 'contact' })}
-        className="flex items-center justify-between gap-4 rounded-xl border border-white/8 bg-white/[0.02] p-4 hover:border-sky-400/40 hover:bg-sky-400/5 transition group"
+        className="flex items-center justify-between gap-3 rounded-xl border border-white/8 bg-white/[0.02] px-3.5 py-3 hover:border-sky-400/40 hover:bg-sky-400/5 transition group"
       >
-        <div className="flex items-center gap-3">
-          <div className="flex h-9 w-9 items-center justify-center rounded-lg border border-sky-400/20 bg-sky-400/8 text-sky-400">
+        <div className="flex items-center gap-3 min-w-0">
+          <div className="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-lg border border-sky-400/20 bg-sky-400/8 text-sky-400">
             {icon}
           </div>
-          <div>
+          <div className="min-w-0">
             <div className="text-[10.5px] font-mono uppercase tracking-eyebrow text-ink-400">
               {label}
             </div>
-            <div className="text-[14px] text-ink-100">{value}</div>
+            <div className="text-[14px] text-ink-100 truncate">{value}</div>
           </div>
         </div>
-        <span className="text-ink-500 group-hover:text-sky-400 transition">→</span>
+        <span className="flex-shrink-0 text-ink-500 group-hover:text-sky-400 transition">→</span>
       </a>
     </li>
   );
