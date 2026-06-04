@@ -14,9 +14,8 @@
  *      with a brighter line + radial glow.
  *
  * Performance discipline (tuned to keep INP / main-thread time low):
- *   - Frame rate is capped to ~30 FPS. Doubling the gap between heavy
- *     frames (vs 60 FPS) leaves room for interaction handlers to run and
- *     paint promptly → lower INP. An ambient background doesn't need 60.
+ *   - Runs at 60 FPS for a smooth field. The heavy lifting is kept cheap
+ *     by the batched-draw strategy below rather than by throttling frames.
  *   - Lines are drawn in alpha BUCKETS: instead of one beginPath()/stroke()
  *     per segment (hundreds of GPU calls), segments are grouped into a few
  *     Path2D objects by proximity and stroked once each. Same look, ~99%
@@ -33,7 +32,7 @@ import { useEffect, useRef } from 'react';
 
 type P = { x: number; y: number; vx: number; vy: number; r: number };
 
-const FPS = 30;
+const FPS = 60;
 const FRAME_MS = 1000 / FPS;
 const LINK_BUCKETS = 4; // alpha quantization for batched line strokes
 
