@@ -10,22 +10,32 @@
  *      brownian nudge so the field never settles into a static lattice.
  *   3. Particles within `LINK_DIST` of each other draw a connecting line
  *      with alpha proportional to proximity → looks like a neural network.
- *   4. Particles within `MOUSE_RADIUS` of the pointer also link to the
- *      pointer with a brighter line + radial glow.
+ *   4. Particles within `MOUSE_RADIUS` of the pointer link to the pointer
+ *      with a brighter line + radial glow.
  *
- * Performance discipline:
- *   - `IntersectionObserver` pauses the rAF loop when the hero scrolls off
- *     screen so the rest of the page doesn't pay for it on long mobile pages.
- *   - DPR is clamped to 2 so 3× retina screens don't tank framerate.
- *   - Particle/link counts are halved on `max-width: 768px`.
- *   - Pointer interactivity is disabled on touch devices (`hover: hover` is
- *     false) — finger-tracking via `pointermove` would feel laggy and weird.
+ * Performance discipline (tuned to keep INP / main-thread time low):
+ *   - Frame rate is capped to ~30 FPS. Doubling the gap between heavy
+ *     frames (vs 60 FPS) leaves room for interaction handlers to run and
+ *     paint promptly → lower INP. An ambient background doesn't need 60.
+ *   - Lines are drawn in alpha BUCKETS: instead of one beginPath()/stroke()
+ *     per segment (hundreds of GPU calls), segments are grouped into a few
+ *     Path2D objects by proximity and stroked once each. Same look, ~99%
+ *     fewer stroke calls.
+ *   - Nodes are filled in two passes (far / near) instead of per-node.
+ *   - `IntersectionObserver` pauses the loop when the hero scrolls off
+ *     screen so the rest of the page never pays for it.
+ *   - DPR clamped to 2; particle/link counts scale down on small screens.
+ *   - Pointer interactivity is disabled on touch devices (`hover: hover`).
  *   - `prefers-reduced-motion`: renders one static frame and stops.
  */
 
 import { useEffect, useRef } from 'react';
 
 type P = { x: number; y: number; vx: number; vy: number; r: number };
+
+const FPS = 30;
+const FRAME_MS = 1000 / FPS;
+const LINK_BUCKETS = 4; // alpha quantization for batched line strokes
 
 export default function HeroBackground() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -41,15 +51,17 @@ export default function HeroBackground() {
     const canHover = window.matchMedia('(hover: hover)').matches;
     const isSmall = window.matchMedia('(max-width: 768px)').matches;
 
-    // Tuned for ~60fps on mid-range hardware. Bumping COUNT past ~120
-    // on desktop tips into noticeable jank because the link-drawing
-    // step is O(n²).
-    const COUNT = isSmall ? 36 : 90;
-    const LINK_DIST = isSmall ? 90 : 140;
+    // Counts trimmed from the previous 90/36 to cut per-frame work without
+    // visibly thinning the field.
+    const COUNT = isSmall ? 28 : 70;
+    const LINK_DIST = isSmall ? 90 : 125;
     const MOUSE_RADIUS = isSmall ? 0 : 200;
+    const LINK_DIST_SQ = LINK_DIST * LINK_DIST;
+    const MOUSE_RADIUS_SQ = MOUSE_RADIUS * MOUSE_RADIUS;
 
     let raf = 0;
     let running = true;
+    let lastFrame = 0;
     let particles: P[] = [];
     const mouse = { x: -9999, y: -9999, active: false };
 
@@ -76,20 +88,19 @@ export default function HeroBackground() {
       }));
     }
 
-    function step() {
-      if (!running) return;
+    function render() {
       const rect = canvas!.getBoundingClientRect();
       const w = rect.width;
       const h = rect.height;
       ctx!.clearRect(0, 0, w, h);
 
-      // Update
+      // --- Update positions ---
       for (const p of particles) {
         if (mouse.active) {
           const dx = mouse.x - p.x;
           const dy = mouse.y - p.y;
           const d2 = dx * dx + dy * dy;
-          if (d2 < MOUSE_RADIUS * MOUSE_RADIUS && d2 > 1) {
+          if (d2 < MOUSE_RADIUS_SQ && d2 > 1) {
             const d = Math.sqrt(d2);
             const force = ((MOUSE_RADIUS - d) / MOUSE_RADIUS) * 0.035;
             p.vx += (dx / d) * force;
@@ -106,7 +117,8 @@ export default function HeroBackground() {
         else if (p.y > h + 20) p.y = -20;
       }
 
-      // Particle-to-particle links
+      // --- Particle-to-particle links, batched into alpha buckets ---
+      const linkPaths = Array.from({ length: LINK_BUCKETS }, () => new Path2D());
       for (let i = 0; i < particles.length; i++) {
         const a = particles[i];
         for (let j = i + 1; j < particles.length; j++) {
@@ -114,51 +126,59 @@ export default function HeroBackground() {
           const dx = a.x - b.x;
           const dy = a.y - b.y;
           const d2 = dx * dx + dy * dy;
-          if (d2 < LINK_DIST * LINK_DIST) {
-            const t = 1 - Math.sqrt(d2) / LINK_DIST;
-            ctx!.strokeStyle = `rgba(56, 189, 248, ${t * 0.18})`;
-            ctx!.lineWidth = 0.55;
-            ctx!.beginPath();
-            ctx!.moveTo(a.x, a.y);
-            ctx!.lineTo(b.x, b.y);
-            ctx!.stroke();
+          if (d2 < LINK_DIST_SQ) {
+            const t = 1 - Math.sqrt(d2) / LINK_DIST; // 0..1 (closer = brighter)
+            const bucket = Math.min(LINK_BUCKETS - 1, (t * LINK_BUCKETS) | 0);
+            const path = linkPaths[bucket];
+            path.moveTo(a.x, a.y);
+            path.lineTo(b.x, b.y);
           }
         }
       }
+      ctx!.lineWidth = 0.55;
+      for (let k = 0; k < LINK_BUCKETS; k++) {
+        const alpha = ((k + 0.5) / LINK_BUCKETS) * 0.18;
+        ctx!.strokeStyle = `rgba(56, 189, 248, ${alpha})`;
+        ctx!.stroke(linkPaths[k]);
+      }
 
-      // Cursor links
+      // --- Cursor links (few; one batched path) ---
       if (mouse.active) {
+        const cursorPath = new Path2D();
         for (const p of particles) {
           const dx = p.x - mouse.x;
           const dy = p.y - mouse.y;
-          const d2 = dx * dx + dy * dy;
-          if (d2 < MOUSE_RADIUS * MOUSE_RADIUS) {
-            const t = 1 - Math.sqrt(d2) / MOUSE_RADIUS;
-            ctx!.strokeStyle = `rgba(125, 211, 252, ${t * 0.55})`;
-            ctx!.lineWidth = 0.85;
-            ctx!.beginPath();
-            ctx!.moveTo(p.x, p.y);
-            ctx!.lineTo(mouse.x, mouse.y);
-            ctx!.stroke();
+          if (dx * dx + dy * dy < MOUSE_RADIUS_SQ) {
+            cursorPath.moveTo(p.x, p.y);
+            cursorPath.lineTo(mouse.x, mouse.y);
           }
         }
+        ctx!.strokeStyle = 'rgba(125, 211, 252, 0.32)';
+        ctx!.lineWidth = 0.85;
+        ctx!.stroke(cursorPath);
       }
 
-      // Nodes
+      // --- Nodes: two fill passes (far, then near) ---
+      const farPath = new Path2D();
+      const nearPath = new Path2D();
       for (const p of particles) {
         let near = false;
         if (mouse.active) {
           const dx = p.x - mouse.x;
           const dy = p.y - mouse.y;
-          if (dx * dx + dy * dy < MOUSE_RADIUS * MOUSE_RADIUS) near = true;
+          if (dx * dx + dy * dy < MOUSE_RADIUS_SQ) near = true;
         }
-        ctx!.fillStyle = near ? 'rgba(125, 211, 252, 0.95)' : 'rgba(148, 163, 184, 0.42)';
-        ctx!.beginPath();
-        ctx!.arc(p.x, p.y, near ? p.r + 0.8 : p.r, 0, Math.PI * 2);
-        ctx!.fill();
+        const target = near ? nearPath : farPath;
+        const r = near ? p.r + 0.8 : p.r;
+        target.moveTo(p.x + r, p.y);
+        target.arc(p.x, p.y, r, 0, Math.PI * 2);
       }
+      ctx!.fillStyle = 'rgba(148, 163, 184, 0.42)';
+      ctx!.fill(farPath);
+      ctx!.fillStyle = 'rgba(125, 211, 252, 0.95)';
+      ctx!.fill(nearPath);
 
-      // Cursor glow
+      // --- Cursor glow ---
       if (mouse.active) {
         const g = ctx!.createRadialGradient(mouse.x, mouse.y, 0, mouse.x, mouse.y, 80);
         g.addColorStop(0, 'rgba(56, 189, 248, 0.35)');
@@ -174,8 +194,20 @@ export default function HeroBackground() {
         ctx!.arc(mouse.x, mouse.y, 2.6, 0, Math.PI * 2);
         ctx!.fill();
       }
+    }
 
-      raf = requestAnimationFrame(step);
+    function loop(now: number) {
+      if (!running) return;
+      raf = requestAnimationFrame(loop);
+      // Frame-rate cap: skip frames that arrive sooner than FRAME_MS.
+      if (now - lastFrame < FRAME_MS) return;
+      lastFrame = now;
+      render();
+    }
+
+    function start() {
+      lastFrame = 0;
+      raf = requestAnimationFrame(loop);
     }
 
     function onMove(e: PointerEvent) {
@@ -199,14 +231,14 @@ export default function HeroBackground() {
       });
     }
 
-    // Pause when out of view (perf on mobile scroll)
+    // Pause when out of view (perf on long scrolls)
     let observer: IntersectionObserver | null = null;
     if ('IntersectionObserver' in window) {
       observer = new IntersectionObserver(
         ([entry]) => {
           if (entry.isIntersecting && !running) {
             running = true;
-            step();
+            start();
           } else if (!entry.isIntersecting && running) {
             running = false;
             cancelAnimationFrame(raf);
@@ -219,12 +251,12 @@ export default function HeroBackground() {
 
     resize();
     seed();
-    if (!reduced) step();
-    else {
-      // Static render once for reduced-motion users
-      step();
+    if (!reduced) {
+      start();
+    } else {
+      // Static single frame for reduced-motion users
+      render();
       running = false;
-      cancelAnimationFrame(raf);
     }
 
     window.addEventListener('pointermove', onMove, { passive: true });
