@@ -1,32 +1,15 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
   <defs>
-    <radialGradient id="glow" cx="50%" cy="50%" r="50%">
-      <stop offset="0%" stop-color="#38bdf8" stop-opacity="0.55"/>
-      <stop offset="60%" stop-color="#38bdf8" stop-opacity="0.0"/>
-    </radialGradient>
-    <linearGradient id="line" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0%" stop-color="#38bdf8" stop-opacity="0.85"/>
-      <stop offset="100%" stop-color="#7dd3fc" stop-opacity="0.45"/>
+    <linearGradient id="lg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#7dd3fc"/>
+      <stop offset="1" stop-color="#38bdf8"/>
     </linearGradient>
   </defs>
   <rect width="64" height="64" rx="14" fill="#0a0f1c"/>
-  <!-- ambient glow behind the central node -->
-  <circle cx="32" cy="32" r="22" fill="url(#glow)"/>
-  <!-- network edges -->
-  <g stroke="url(#line)" stroke-width="1.5" stroke-linecap="round">
-    <line x1="18" y1="20" x2="32" y2="32"/>
-    <line x1="46" y1="22" x2="32" y2="32"/>
-    <line x1="32" y1="32" x2="20" y2="46"/>
-    <line x1="32" y1="32" x2="48" y2="46"/>
+  <g fill="none" stroke="url(#lg)" stroke-width="5.5" stroke-linecap="round" stroke-linejoin="round">
+    <!-- L -->
+    <path d="M 19 18 V 46 H 30"/>
+    <!-- G: geometric rounded-square, open mid-right with tongue -->
+    <path d="M 48 30 V 26 A 6 6 0 0 0 42 20 H 41 A 6 6 0 0 0 35 26 V 40 A 6 6 0 0 0 41 46 H 42 A 6 6 0 0 0 48 40 V 35 H 41"/>
   </g>
-  <!-- outer nodes -->
-  <g fill="#7dd3fc">
-    <circle cx="18" cy="20" r="3"/>
-    <circle cx="46" cy="22" r="3"/>
-    <circle cx="20" cy="46" r="3"/>
-    <circle cx="48" cy="46" r="3"/>
-  </g>
-  <!-- center node, brighter -->
-  <circle cx="32" cy="32" r="5" fill="#38bdf8"/>
-  <circle cx="32" cy="32" r="5" fill="none" stroke="#0a0f1c" stroke-width="1.5"/>
 </svg>

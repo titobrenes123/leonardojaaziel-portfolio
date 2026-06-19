@@ -8,7 +8,13 @@ export const metadata: Metadata = {
   title: en.meta.title,
   description: en.meta.description,
   metadataBase: new URL('https://leonardojaaziel.com'),
-  icons: { icon: '/favicon.svg' },
+  icons: {
+    icon: [
+      { url: '/favicon.svg', type: 'image/svg+xml' },
+      { url: '/favicon-32.png', sizes: '32x32', type: 'image/png' },
+    ],
+    apple: '/apple-touch-icon.png',
+  },
 };
 
 export default function RootLayout({
